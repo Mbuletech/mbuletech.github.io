@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laptop Site Blocking - Hosts File Guide</title>
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f5f6f8;
+    color: #1b1b1b;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 22px;
+    border-bottom: 3px solid #1B3A6B;
+    padding-bottom: 10px;
+  }
+  h2 {
+    font-size: 18px;
+    color: #1B3A6B;
+    margin-top: 30px;
+  }
+  .steps {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 15px 0;
+  }
+  .steps ol {
+    padding-left: 20px;
+  }
+  .steps li {
+    margin-bottom: 8px;
+  }
+  code {
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+  }
+  .block {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+  .block-header {
+    background: #1B3A6B;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .block-header span {
+    font-weight: bold;
+  }
+  button.copy-btn {
+    background: #0A7A7A;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  button.copy-btn:hover {
+    background: #086565;
+  }
+  button.copy-btn.copied {
+    background: #2e7d32;
+  }
+  pre {
+    margin: 0;
+    padding: 15px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 350px;
+    overflow-y: auto;
+  }
+  .gotchas {
+    background: #fff8e1;
+    border: 1px solid #e0c46c;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 15px 0;
+  }
+  .gotchas li {
+    margin-bottom: 8px;
+  }
+  .warn {
+    color: #a15c00;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>Laptop Site Blocking — Hosts File Guide</h1>
+<p>Open this page on any agent laptop, follow the steps below, and copy-paste the domain lists into the hosts file.</p>
+
+<h2>Steps</h2>
+<div class="steps">
+  <ol>
+    <li>Log in using the <strong>admin account</strong>.</li>
+    <li>Click Start, type <code>Notepad</code>, right-click it → <strong>Run as administrator</strong>.</li>
+    <li>Inside Notepad: <strong>File → Open</strong>.</li>
+    <li>Navigate to <code>C:\Windows\System32\drivers\etc\</code></li>
+    <li>Change the file filter (bottom-right dropdown) from "Text Documents" to <strong>All Files</strong>.</li>
+    <li>Open the file named <strong>hosts</strong> (no extension).</li>
+    <li>Copy the domain list below (use the "Copy" button) and paste it at the bottom of the file.</li>
+    <li>Save (<code>Ctrl+S</code>).</li>
+    <li>Open <strong>Command Prompt as administrator</strong> and run:<br><code>ipconfig /flushdns</code></li>
+    <li>Test a couple of sites (e.g. youtube.com, betway.co.zm) in the agent's browser — they should fail to load.</li>
+  </ol>
+</div>
+
+<h2>Full List — Copy All</h2>
+<div class="block">
+  <div class="block-header">
+    <span>All domains (paste this whole thing)</span>
+    <button class="copy-btn" onclick="copyBlock('all-domains', this)">Copy</button>
+  </div>
+  <pre id="all-domains"># ================= VIDEO / SOCIAL MEDIA =================
+127.0.0.1 youtube.com
+127.0.0.1 www.youtube.com
+127.0.0.1 m.youtube.com
+127.0.0.1 youtu.be
+127.0.0.1 music.youtube.com
+127.0.0.1 instagram.com
+127.0.0.1 www.instagram.com
+127.0.0.1 tiktok.com
+127.0.0.1 www.tiktok.com
+127.0.0.1 tiktokv.com
+127.0.0.1 www.tiktokv.com
+127.0.0.1 facebook.com
+127.0.0.1 www.facebook.com
+127.0.0.1 m.facebook.com
+127.0.0.1 fb.com
+127.0.0.1 www.fb.com
+127.0.0.1 x.com
+127.0.0.1 www.x.com
+127.0.0.1 twitter.com
+127.0.0.1 www.twitter.com
+127.0.0.1 reddit.com
+127.0.0.1 www.reddit.com
+127.0.0.1 snapchat.com
+127.0.0.1 www.snapchat.com
+127.0.0.1 web.snapchat.com
+127.0.0.1 discord.com
+127.0.0.1 www.discord.com
+127.0.0.1 discordapp.com
+127.0.0.1 www.discordapp.com
+127.0.0.1 pinterest.com
+127.0.0.1 www.pinterest.com
+127.0.0.1 telegram.org
+127.0.0.1 www.telegram.org
+127.0.0.1 web.telegram.org
+127.0.0.1 threads.net
+127.0.0.1 www.threads.net
+127.0.0.1 bluesky.app
+127.0.0.1 www.bluesky.app
+127.0.0.1 bsky.app
+127.0.0.1 www.bsky.app
+127.0.0.1 mastodon.social
+127.0.0.1 www.mastodon.social
+127.0.0.1 mastodon.online
+127.0.0.1 www.mastodon.online
+127.0.0.1 vimeo.com
+127.0.0.1 www.vimeo.com
+127.0.0.1 tumblr.com
+127.0.0.1 www.tumblr.com
+127.0.0.1 truthsocial.com
+127.0.0.1 www.truthsocial.com
+127.0.0.1 weibo.com
+127.0.0.1 www.weibo.com
+127.0.0.1 vk.com
+127.0.0.1 www.vk.com
+127.0.0.1 wechat.com
+127.0.0.1 www.wechat.com
+127.0.0.1 web.wechat.com
+127.0.0.1 line.me
+127.0.0.1 www.line.me
+127.0.0.1 signal.org
+127.0.0.1 www.signal.org
+127.0.0.1 quora.com
+127.0.0.1 www.quora.com
+127.0.0.1 9gag.com
+127.0.0.1 www.9gag.com
+127.0.0.1 imgur.com
+127.0.0.1 www.imgur.com
+
+# ================= MUSIC STREAMING =================
+127.0.0.1 spotify.com
+127.0.0.1 www.spotify.com
+127.0.0.1 open.spotify.com
+127.0.0.1 boomplay.com
+127.0.0.1 www.boomplay.com
+127.0.0.1 music.apple.com
+127.0.0.1 audiomack.com
+127.0.0.1 www.audiomack.com
+127.0.0.1 audiomack.co
+127.0.0.1 www.audiomack.co
+127.0.0.1 soundcloud.com
+127.0.0.1 www.soundcloud.com
+127.0.0.1 deezer.com
+127.0.0.1 www.deezer.com
+127.0.0.1 tidal.com
+127.0.0.1 www.tidal.com
+127.0.0.1 music.amazon.com
+127.0.0.1 mixcloud.com
+127.0.0.1 www.mixcloud.com
+127.0.0.1 pandora.com
+127.0.0.1 www.pandora.com
+127.0.0.1 qobuz.com
+127.0.0.1 www.qobuz.com
+127.0.0.1 anghami.com
+127.0.0.1 www.anghami.com
+127.0.0.1 napster.com
+127.0.0.1 www.napster.com
+127.0.0.1 bandcamp.com
+127.0.0.1 www.bandcamp.com
+127.0.0.1 jiosaavn.com
+127.0.0.1 www.jiosaavn.com
+127.0.0.1 gaana.com
+127.0.0.1 www.gaana.com
+127.0.0.1 mdundo.com
+127.0.0.1 www.mdundo.com
+127.0.0.1 spinlet.com
+127.0.0.1 www.spinlet.com
+
+# ================= MOVIES / TV (legit + piracy) =================
+127.0.0.1 netflix.com
+127.0.0.1 www.netflix.com
+127.0.0.1 themoviebox.xyz
+127.0.0.1 www.themoviebox.xyz
+127.0.0.1 fzmovies.net
+127.0.0.1 www.fzmovies.net
+127.0.0.1 myfzmovies.com
+127.0.0.1 www.myfzmovies.com
+127.0.0.1 o2tvseries.com
+127.0.0.1 www.o2tvseries.com
+127.0.0.1 o2tvseries4u.com
+127.0.0.1 www.o2tvseries4u.com
+127.0.0.1 o2tv.co
+127.0.0.1 www.o2tv.co
+127.0.0.1 netnaija.com
+127.0.0.1 www.netnaija.com
+127.0.0.1 thenetnaija.com
+127.0.0.1 www.thenetnaija.com
+127.0.0.1 netnaija.xyz
+127.0.0.1 www.netnaija.xyz
+127.0.0.1 nzs.to
+127.0.0.1 www.nzs.to
+127.0.0.1 9jarocks.com
+127.0.0.1 www.9jarocks.com
+127.0.0.1 9jarocks.net
+127.0.0.1 www.9jarocks.net
+127.0.0.1 nkiri.com
+127.0.0.1 www.nkiri.com
+127.0.0.1 wapbaze.com
+127.0.0.1 www.wapbaze.com
+127.0.0.1 toxicwap.com
+127.0.0.1 www.toxicwap.com
+
+# ================= ANIME =================
+127.0.0.1 gogoanime3.co
+127.0.0.1 www.gogoanime3.co
+127.0.0.1 gogoanime.news
+127.0.0.1 www.gogoanime.news
+127.0.0.1 gogoanimetv.to
+127.0.0.1 www.gogoanimetv.to
+127.0.0.1 animepahe.org
+127.0.0.1 www.animepahe.org
+127.0.0.1 animepahe.ru
+127.0.0.1 www.animepahe.ru
+127.0.0.1 animeheaven.me
+127.0.0.1 www.animeheaven.me
+127.0.0.1 animeheaven.to
+127.0.0.1 www.animeheaven.to
+127.0.0.1 wcostream.one
+127.0.0.1 www.wcostream.one
+127.0.0.1 wcoforever.net
+127.0.0.1 www.wcoforever.net
+
+# ================= GAMING =================
+127.0.0.1 steamcommunity.com
+127.0.0.1 www.steamcommunity.com
+127.0.0.1 store.steampowered.com
+127.0.0.1 help.steampowered.com
+127.0.0.1 epicgames.com
+127.0.0.1 www.epicgames.com
+127.0.0.1 store.epicgames.com
+127.0.0.1 riotgames.com
+127.0.0.1 www.riotgames.com
+127.0.0.1 ea.com
+127.0.0.1 www.ea.com
+127.0.0.1 ubisoft.com
+127.0.0.1 www.ubisoft.com
+127.0.0.1 battle.net
+127.0.0.1 www.battle.net
+127.0.0.1 blizzard.com
+127.0.0.1 www.blizzard.com
+127.0.0.1 xbox.com
+127.0.0.1 www.xbox.com
+127.0.0.1 playstation.com
+127.0.0.1 www.playstation.com
+127.0.0.1 nintendo.com
+127.0.0.1 www.nintendo.com
+127.0.0.1 roblox.com
+127.0.0.1 www.roblox.com
+127.0.0.1 minecraft.net
+127.0.0.1 www.minecraft.net
+127.0.0.1 twitch.tv
+127.0.0.1 www.twitch.tv
+127.0.0.1 kick.com
+127.0.0.1 www.kick.com
+127.0.0.1 crazygames.com
+127.0.0.1 www.crazygames.com
+127.0.0.1 poki.com
+127.0.0.1 www.poki.com
+127.0.0.1 y8.com
+127.0.0.1 www.y8.com
+127.0.0.1 miniclip.com
+127.0.0.1 www.miniclip.com
+127.0.0.1 kongregate.com
+127.0.0.1 www.kongregate.com
+127.0.0.1 armorgames.com
+127.0.0.1 www.armorgames.com
+127.0.0.1 addictinggames.com
+127.0.0.1 www.addictinggames.com
+127.0.0.1 itch.io
+127.0.0.1 www.itch.io
+127.0.0.1 kwai.com
+127.0.0.1 www.kwai.com
+127.0.0.1 kwaishou.com
+127.0.0.1 www.kwaishou.com
+127.0.0.1 mofun.mobi
+127.0.0.1 www.mofun.mobi
+127.0.0.1 triller.co
+127.0.0.1 www.triller.co
+127.0.0.1 larix.tv
+127.0.0.1 www.larix.tv
+127.0.0.1 bgo.tv
+127.0.0.1 www.bgo.tv
+127.0.0.1 livescore.com
+127.0.0.1 www.livescore.com
+
+# ================= BETTING / GAMBLING =================
+127.0.0.1 betway.com
+127.0.0.1 www.betway.com
+127.0.0.1 betway.co.zm
+127.0.0.1 www.betway.co.zm
+127.0.0.1 betway.com.ng
+127.0.0.1 www.betway.com.ng
+127.0.0.1 betpawa.com
+127.0.0.1 www.betpawa.com
+127.0.0.1 betpawa.co.zm
+127.0.0.1 www.betpawa.co.zm
+127.0.0.1 sportybet.com
+127.0.0.1 www.sportybet.com
+127.0.0.1 sportybet.co.zm
+127.0.0.1 www.sportybet.co.zm
+127.0.0.1 msh.sportybet.com
+127.0.0.1 betlion.com
+127.0.0.1 www.betlion.com
+127.0.0.1 betlion.co.zm
+127.0.0.1 www.betlion.co.zm
+127.0.0.1 bwanabet.com
+127.0.0.1 www.bwanabet.com
+127.0.0.1 bongobongo.co.zm
+127.0.0.1 www.bongobongo.co.zm
+127.0.0.1 1xbet.com
+127.0.0.1 www.1xbet.com
+127.0.0.1 1xbet.ng
+127.0.0.1 www.1xbet.ng
+127.0.0.1 1xbet.com.zm
+127.0.0.1 www.1xbet.com.zm
+127.0.0.1 22bet.com
+127.0.0.1 www.22bet.com
+127.0.0.1 22bet.com.zm
+127.0.0.1 www.22bet.com.zm
+127.0.0.1 22bet.ng
+127.0.0.1 www.22bet.ng
+127.0.0.1 20bet.com
+127.0.0.1 www.20bet.com
+127.0.0.1 betwinner.com
+127.0.0.1 www.betwinner.com
+127.0.0.1 melbet.com
+127.0.0.1 www.melbet.com
+127.0.0.1 melbet.co.zm
+127.0.0.1 www.melbet.co.zm
+127.0.0.1 melbet.com.zm
+127.0.0.1 www.melbet.com.zm
+127.0.0.1 megapari.com
+127.0.0.1 www.megapari.com
+127.0.0.1 888bet.com
+127.0.0.1 www.888bet.com
+127.0.0.1 mostbet.com
+127.0.0.1 www.mostbet.com
+127.0.0.1 1win.com
+127.0.0.1 www.1win.com
+127.0.0.1 mojabet.com
+127.0.0.1 www.mojabet.com
+127.0.0.1 bet365.com
+127.0.0.1 www.bet365.com
+127.0.0.1 williamhill.com
+127.0.0.1 www.williamhill.com
+127.0.0.1 betfair.com
+127.0.0.1 www.betfair.com
+127.0.0.1 paddypower.com
+127.0.0.1 www.paddypower.com
+127.0.0.1 coral.co.uk
+127.0.0.1 www.coral.co.uk
+127.0.0.1 ladbrokes.com
+127.0.0.1 www.ladbrokes.com
+127.0.0.1 unibet.com
+127.0.0.1 www.unibet.com
+127.0.0.1 leovegas.com
+127.0.0.1 www.leovegas.com
+127.0.0.1 stake.com
+127.0.0.1 www.stake.com
+127.0.0.1 bc.game
+127.0.0.1 www.bc.game
+127.0.0.1 roobet.com
+127.0.0.1 www.roobet.com
+127.0.0.1 bet9ja.com
+127.0.0.1 www.bet9ja.com
+127.0.0.1 premierbet.com
+127.0.0.1 www.premierbet.com
+127.0.0.1 premierbet.com.zm
+127.0.0.1 www.premierbet.com.zm
+127.0.0.1 gsb.co.zm
+127.0.0.1 www.gsb.co.zm
+127.0.0.1 betking.com
+127.0.0.1 www.betking.com
+127.0.0.1 msport.com
+127.0.0.1 www.msport.com
+127.0.0.1 hollywoodbets.net
+127.0.0.1 www.hollywoodbets.net</pre>
+</div>
+
+<h2>Known Gotchas</h2>
+<div class="gotchas">
+  <ul>
+    <li><span class="warn">Missing "www."</span> — the hosts file needs an exact match. If a site still loads, check the browser's address bar for the exact domain (with or without www) and compare against this list.</li>
+    <li><span class="warn">Local country domains</span> — some betting sites use a Zambia-specific address (e.g. <code>betway.co.zm</code>, <code>betpawa.co.zm</code>) separate from their global <code>.com</code>. If a site still works, check if it's using a local domain not yet on this list.</li>
+    <li><span class="warn">Secure DNS (DoH)</span> — if Chrome or Edge has "Use secure DNS" turned on, it can bypass the hosts file entirely. Check Settings → Privacy and Security → Security in both browsers.</li>
+    <li><span class="warn">BlueStacks (Android emulator)</span> — if used for WhatsApp, it runs its own network stack and does NOT respect the Windows hosts file. Apps installed inside it (YouTube, Instagram, games, etc.) will bypass everything above. Prefer WhatsApp Desktop or web.whatsapp.com instead if possible.</li>
+    <li>After any edit: always <code>ipconfig /flushdns</code> and fully close/reopen the browser before testing.</li>
+  </ul>
+</div>
+
+<p style="margin-top:40px; color:#777; font-size:13px;">Internal reference only — not for public distribution.</p>
+
+<script>
+function copyBlock(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.textContent;
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("copied");
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>
