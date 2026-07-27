@@ -3,111 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laptop Site Blocking - Hosts File Guide</title>
+<title>Mbule.Tech | Laptop Site Blocking Guide</title>
 <style>
-  body {
-    font-family: -apple-system, Segoe UI, Arial, sans-serif;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f5f6f8;
-    color: #1b1b1b;
-    line-height: 1.5;
+  :root {
+    --navy: #1B3A6B;
+    --teal: #0A7A7A;
+    --gold: #C7A008;
+    --bg: #f4f5f7;
   }
-  h1 {
-    font-size: 22px;
-    border-bottom: 3px solid #1B3A6B;
-    padding-bottom: 10px;
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    background: var(--bg);
+    color: #1b1b1b;
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy), #142b52);
+    color: #fff;
+    margin: 0 -20px 25px;
+    padding: 28px 30px;
+    border-bottom: 4px solid var(--gold);
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px; height: 44px; border-radius: 8px;
+    background: var(--gold); color: var(--navy);
+    font-weight: 800; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand h1 { margin: 0; font-size: 22px; letter-spacing: 0.3px; }
+  .brand span.tagline {
+    display: block; font-size: 13px; color: #cfd9ec;
+    font-weight: normal; margin-top: 2px;
   }
   h2 {
-    font-size: 18px;
-    color: #1B3A6B;
-    margin-top: 30px;
+    font-size: 18px; color: var(--navy); margin-top: 34px;
+    border-left: 4px solid var(--teal); padding-left: 10px;
   }
+  h3 { font-size: 15px; color: var(--navy); margin-top: 20px; }
   .steps {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin: 15px 0;
+    background: #fff; border: 1px solid #ddd; border-radius: 10px;
+    padding: 18px 22px; margin: 14px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .steps ol {
-    padding-left: 20px;
-  }
-  .steps li {
-    margin-bottom: 8px;
-  }
+  .steps ol { padding-left: 20px; }
+  .steps li { margin-bottom: 8px; }
   code {
-    background: #eee;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: Consolas, monospace;
+    background: #eef0f3; padding: 2px 6px; border-radius: 4px;
+    font-family: Consolas, monospace; font-size: 13px;
   }
-  .block {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 15px 0;
-    overflow: hidden;
+  details.block {
+    background: #fff; border: 1px solid #ddd; border-radius: 10px;
+    margin: 12px 0; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .block-header {
-    background: #1B3A6B;
-    color: white;
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  details.block summary {
+    background: var(--navy); color: #fff; padding: 12px 16px;
+    cursor: pointer; font-weight: 600; list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .block-header span {
-    font-weight: bold;
+  details.block summary::-webkit-details-marker { display: none; }
+  details.block summary::after {
+    content: "▸"; transition: transform 0.15s ease; color: var(--gold); font-size: 16px;
+  }
+  details.block[open] summary::after { transform: rotate(90deg); }
+  .summary-left { display: flex; align-items: center; gap: 10px; }
+  .count-pill {
+    background: rgba(255,255,255,0.15); padding: 2px 9px;
+    border-radius: 20px; font-size: 12px; font-weight: normal;
   }
   button.copy-btn {
-    background: #0A7A7A;
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 13px;
+    background: var(--teal); color: white; border: none;
+    padding: 6px 14px; border-radius: 5px; cursor: pointer;
+    font-size: 13px; font-weight: 600;
   }
-  button.copy-btn:hover {
-    background: #086565;
+  button.copy-btn:hover { background: #086565; }
+  button.copy-btn.copied { background: #2e7d32; }
+  button.copy-all-btn {
+    background: var(--gold); color: var(--navy); border: none;
+    padding: 10px 20px; border-radius: 6px; cursor: pointer;
+    font-size: 14px; font-weight: 700; margin: 10px 0 20px;
   }
-  button.copy-btn.copied {
-    background: #2e7d32;
-  }
+  button.copy-all-btn:hover { filter: brightness(0.95); }
+  button.copy-all-btn.copied { background: #2e7d32; color: #fff; }
   pre {
-    margin: 0;
-    padding: 15px;
-    font-family: Consolas, monospace;
-    font-size: 13px;
-    white-space: pre-wrap;
-    word-break: break-all;
-    max-height: 350px;
-    overflow-y: auto;
+    margin: 0; padding: 15px; font-family: Consolas, monospace;
+    font-size: 13px; white-space: pre-wrap; word-break: break-all;
+    max-height: 320px; overflow-y: auto; background: #fafbfc;
   }
   .gotchas {
-    background: #fff8e1;
-    border: 1px solid #e0c46c;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin: 15px 0;
+    background: #fff8e1; border: 1px solid #e0c46c; border-radius: 10px;
+    padding: 16px 22px; margin: 14px 0;
   }
-  .gotchas li {
-    margin-bottom: 8px;
+  .gotchas li { margin-bottom: 9px; }
+  .warn { color: #a15c00; font-weight: bold; }
+  .method-box {
+    background: #fff; border: 1px solid #ddd; border-radius: 10px;
+    padding: 18px 22px; margin: 14px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .warn {
-    color: #a15c00;
-    font-weight: bold;
+  table {
+    width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px;
   }
+  table th, table td {
+    border: 1px solid #ddd; padding: 8px 10px; text-align: left;
+  }
+  table th { background: #eef0f3; }
+  footer {
+    margin-top: 50px; padding-top: 16px; border-top: 1px solid #ddd;
+    color: #777; font-size: 13px; text-align: center;
+  }
+  footer strong { color: var(--navy); }
 </style>
 </head>
 <body>
 
-<h1>Laptop Site Blocking — Hosts File Guide</h1>
-<p>Open this page on any agent laptop, follow the steps below, and copy-paste the domain lists into the hosts file.</p>
+<header>
+  <div class="brand">
+    <div class="brand-mark">MT</div>
+    <div>
+      <h1>Mbule.Tech</h1>
+      <span class="tagline">Laptop Site Blocking Guide — Back Office Operations</span>
+    </div>
+  </div>
+</header>
 
-<h2>Steps</h2>
+<p>Open this page on any agent laptop. Follow the steps once, then expand only the categories you need and copy them into the hosts file.</p>
+
+<h2>Steps — Site Blocking</h2>
 <div class="steps">
   <ol>
     <li>Log in using the <strong>admin account</strong>.</li>
@@ -116,21 +144,22 @@
     <li>Navigate to <code>C:\Windows\System32\drivers\etc\</code></li>
     <li>Change the file filter (bottom-right dropdown) from "Text Documents" to <strong>All Files</strong>.</li>
     <li>Open the file named <strong>hosts</strong> (no extension).</li>
-    <li>Copy the domain list below (use the "Copy" button) and paste it at the bottom of the file.</li>
+    <li>Expand a category below, hit <strong>Copy</strong>, and paste it at the bottom of the file — or use <strong>Copy All</strong> for everything at once.</li>
     <li>Save (<code>Ctrl+S</code>).</li>
-    <li>Open <strong>Command Prompt as administrator</strong> and run:<br><code>ipconfig /flushdns</code></li>
-    <li>Test a couple of sites (e.g. youtube.com, betway.co.zm) in the agent's browser — they should fail to load.</li>
+    <li>Open <strong>Command Prompt as administrator</strong> and run: <code>ipconfig /flushdns</code></li>
+    <li>Test a couple of sites (e.g. youtube.com, betway.co.zm, whatsapp.com) in the agent's browser — they should fail to load.</li>
   </ol>
 </div>
 
-<h2>Full List — Copy All</h2>
-<div class="block">
-  <div class="block-header">
-    <span>All domains (paste this whole thing)</span>
-    <button class="copy-btn" onclick="copyBlock('all-domains', this)">Copy</button>
-  </div>
-  <pre id="all-domains"># ================= VIDEO / SOCIAL MEDIA =================
-127.0.0.1 youtube.com
+<h2>Domain Lists — expand what you need</h2>
+<button class="copy-all-btn" onclick="copyAll(this)">📋 Copy Everything (all categories)</button>
+
+<details class="block">
+  <summary>
+    <span class="summary-left">Social Media &amp; Messaging <span class="count-pill" id="count-social"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-social', this)">Copy</button>
+  </summary>
+  <pre id="cat-social">127.0.0.1 youtube.com
 127.0.0.1 www.youtube.com
 127.0.0.1 m.youtube.com
 127.0.0.1 youtu.be
@@ -191,15 +220,25 @@
 127.0.0.1 www.line.me
 127.0.0.1 signal.org
 127.0.0.1 www.signal.org
+127.0.0.1 whatsapp.com
+127.0.0.1 www.whatsapp.com
+127.0.0.1 web.whatsapp.com
+127.0.0.1 api.whatsapp.com
+127.0.0.1 chat.whatsapp.com
 127.0.0.1 quora.com
 127.0.0.1 www.quora.com
 127.0.0.1 9gag.com
 127.0.0.1 www.9gag.com
 127.0.0.1 imgur.com
-127.0.0.1 www.imgur.com
+127.0.0.1 www.imgur.com</pre>
+</details>
 
-# ================= MUSIC STREAMING =================
-127.0.0.1 spotify.com
+<details class="block">
+  <summary>
+    <span class="summary-left">Music Streaming <span class="count-pill" id="count-music"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-music', this)">Copy</button>
+  </summary>
+  <pre id="cat-music">127.0.0.1 spotify.com
 127.0.0.1 www.spotify.com
 127.0.0.1 open.spotify.com
 127.0.0.1 boomplay.com
@@ -235,10 +274,15 @@
 127.0.0.1 mdundo.com
 127.0.0.1 www.mdundo.com
 127.0.0.1 spinlet.com
-127.0.0.1 www.spinlet.com
+127.0.0.1 www.spinlet.com</pre>
+</details>
 
-# ================= MOVIES / TV (legit + piracy) =================
-127.0.0.1 netflix.com
+<details class="block">
+  <summary>
+    <span class="summary-left">Movies / TV — legit + piracy <span class="count-pill" id="count-movies"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-movies', this)">Copy</button>
+  </summary>
+  <pre id="cat-movies">127.0.0.1 netflix.com
 127.0.0.1 www.netflix.com
 127.0.0.1 themoviebox.xyz
 127.0.0.1 www.themoviebox.xyz
@@ -269,10 +313,15 @@
 127.0.0.1 wapbaze.com
 127.0.0.1 www.wapbaze.com
 127.0.0.1 toxicwap.com
-127.0.0.1 www.toxicwap.com
+127.0.0.1 www.toxicwap.com</pre>
+</details>
 
-# ================= ANIME =================
-127.0.0.1 gogoanime3.co
+<details class="block">
+  <summary>
+    <span class="summary-left">Anime <span class="count-pill" id="count-anime"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-anime', this)">Copy</button>
+  </summary>
+  <pre id="cat-anime">127.0.0.1 gogoanime3.co
 127.0.0.1 www.gogoanime3.co
 127.0.0.1 gogoanime.news
 127.0.0.1 www.gogoanime.news
@@ -289,10 +338,15 @@
 127.0.0.1 wcostream.one
 127.0.0.1 www.wcostream.one
 127.0.0.1 wcoforever.net
-127.0.0.1 www.wcoforever.net
+127.0.0.1 www.wcoforever.net</pre>
+</details>
 
-# ================= GAMING =================
-127.0.0.1 steamcommunity.com
+<details class="block">
+  <summary>
+    <span class="summary-left">Gaming <span class="count-pill" id="count-gaming"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-gaming', this)">Copy</button>
+  </summary>
+  <pre id="cat-gaming">127.0.0.1 steamcommunity.com
 127.0.0.1 www.steamcommunity.com
 127.0.0.1 store.steampowered.com
 127.0.0.1 help.steampowered.com
@@ -352,10 +406,15 @@
 127.0.0.1 bgo.tv
 127.0.0.1 www.bgo.tv
 127.0.0.1 livescore.com
-127.0.0.1 www.livescore.com
+127.0.0.1 www.livescore.com</pre>
+</details>
 
-# ================= BETTING / GAMBLING =================
-127.0.0.1 betway.com
+<details class="block">
+  <summary>
+    <span class="summary-left">Betting / Gambling <span class="count-pill" id="count-betting"></span></span>
+    <button class="copy-btn" onclick="event.preventDefault(); copyBlock('cat-betting', this)">Copy</button>
+  </summary>
+  <pre id="cat-betting">127.0.0.1 betway.com
 127.0.0.1 www.betway.com
 127.0.0.1 betway.co.zm
 127.0.0.1 www.betway.co.zm
@@ -446,22 +505,80 @@
 127.0.0.1 www.msport.com
 127.0.0.1 hollywoodbets.net
 127.0.0.1 www.hollywoodbets.net</pre>
+</details>
+
+<h2>USB &amp; External Device Blocking</h2>
+<p>This locks down removable storage (USB flash drives, external hard drives) and phones/MTP devices from being read or written on the laptop. Keyboards, mice, and other standard peripherals are <strong>not</strong> affected.</p>
+
+<div class="gotchas">
+  <li style="list-style:none;"><span class="warn">This is all-or-nothing.</span> There's no simple way to allow one approved USB drive while blocking others — every removable disk and every phone gets blocked, or none do. If an agent has a legitimate need for a USB drive, this will block that too.</li>
+</div>
+
+<h3>Method 1 — Group Policy (Windows Pro, Enterprise, Education only)</h3>
+<div class="method-box">
+  <ol>
+    <li>Press <code>Windows + R</code> → type <code>gpedit.msc</code> → Enter.</li>
+    <li>Navigate: <code>Computer Configuration → Administrative Templates → System → Removable Storage Access</code></li>
+    <li>Double-click each of these and set to <strong>Enabled</strong>:</li>
+  </ol>
+  <table>
+    <tr><th>Setting</th><th>Action</th></tr>
+    <tr><td>Removable Disks: Deny read access</td><td>Enabled</td></tr>
+    <tr><td>Removable Disks: Deny write access</td><td>Enabled</td></tr>
+    <tr><td>WPD Devices: Deny read access</td><td>Enabled</td></tr>
+    <tr><td>WPD Devices: Deny write access</td><td>Enabled</td></tr>
+  </table>
+  <p>Click <strong>Apply → OK</strong> after each one. WPD (Windows Portable Devices) is what catches phones and media players connected via USB/MTP.</p>
+  <p>Then run as admin in Command Prompt to apply immediately:</p>
+  <pre>gpupdate /force</pre>
+</div>
+
+<h3>Method 2 — Registry (works on Windows Home too, no gpedit needed)</h3>
+<div class="method-box">
+  <p>This writes the same policy values gpedit.msc would set, directly to the registry. Open <strong>Command Prompt as administrator</strong> and run:</p>
+  <pre>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53f5630d-b6bf-11d0-94f2-00a0c91efb8b}" /v Deny_Read /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{53f5630d-b6bf-11d0-94f2-00a0c91efb8b}" /v Deny_Write /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{6AC27878-A6FA-4155-BA85-F98F491D4F33}" /v Deny_Read /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices\{6AC27878-A6FA-4155-BA85-F98F491D4F33}" /v Deny_Write /t REG_DWORD /d 1 /f
+gpupdate /force</pre>
+  <p>If <code>gpupdate /force</code> doesn't seem to take effect immediately, restart the laptop — the registry-direct method occasionally needs a reboot to fully apply, unlike the GPO method.</p>
+</div>
+
+<h3>Verify</h3>
+<div class="method-box">
+  <p>Plug in a USB flash drive and try to open it. You should see: <code>Location is not available — Access is denied</code>. Also confirm keyboard/mouse still work normally (they will — different device class).</p>
+</div>
+
+<h3>To reverse</h3>
+<div class="method-box">
+  <p><strong>GPO method:</strong> set each of the four settings back to "Not Configured" in gpedit.msc, then <code>gpupdate /force</code>.</p>
+  <p><strong>Registry method:</strong> delete the four values (or the two GUID keys entirely) from <code>HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices</code>, then <code>gpupdate /force</code> or restart.</p>
 </div>
 
 <h2>Known Gotchas</h2>
 <div class="gotchas">
   <ul>
     <li><span class="warn">Missing "www."</span> — the hosts file needs an exact match. If a site still loads, check the browser's address bar for the exact domain (with or without www) and compare against this list.</li>
-    <li><span class="warn">Local country domains</span> — some betting sites use a Zambia-specific address (e.g. <code>betway.co.zm</code>, <code>betpawa.co.zm</code>) separate from their global <code>.com</code>. If a site still works, check if it's using a local domain not yet on this list.</li>
+    <li><span class="warn">Local country domains</span> — some betting sites use a Zambia-specific address (e.g. <code>betway.co.zm</code>, <code>betpawa.co.zm</code>) separate from their global <code>.com</code>. If a site still works, check whether it's using a local domain not yet on this list.</li>
     <li><span class="warn">Secure DNS (DoH)</span> — if Chrome or Edge has "Use secure DNS" turned on, it can bypass the hosts file entirely. Check Settings → Privacy and Security → Security in both browsers.</li>
-    <li><span class="warn">BlueStacks (Android emulator)</span> — if used for WhatsApp, it runs its own network stack and does NOT respect the Windows hosts file. Apps installed inside it (YouTube, Instagram, games, etc.) will bypass everything above. Prefer WhatsApp Desktop or web.whatsapp.com instead if possible.</li>
-    <li>After any edit: always <code>ipconfig /flushdns</code> and fully close/reopen the browser before testing.</li>
+    <li><span class="warn">Android emulators (e.g. BlueStacks)</span> — these run their own network stack and do NOT respect the Windows hosts file. If one is installed on a laptop, everything above can be bypassed from inside it — worth checking whether it's present and handling separately.</li>
+    <li>After any edit: always run <code>ipconfig /flushdns</code> and fully close/reopen the browser before testing.</li>
   </ul>
 </div>
 
-<p style="margin-top:40px; color:#777; font-size:13px;">Internal reference only — not for public distribution.</p>
+<footer>
+  <p>© 2026 <strong>Mbule.Tech</strong>. Internal reference only — not for public distribution.</p>
+</footer>
 
 <script>
+const categoryIds = ['cat-social','cat-music','cat-movies','cat-anime','cat-gaming','cat-betting'];
+const countIds = { 'cat-social':'count-social','cat-music':'count-music','cat-movies':'count-movies','cat-anime':'count-anime','cat-gaming':'count-gaming','cat-betting':'count-betting' };
+
+categoryIds.forEach(id => {
+  const lines = document.getElementById(id).innerText.trim().split('\n').filter(l => l.trim().length > 0);
+  document.getElementById(countIds[id]).textContent = lines.length + ' entries';
+});
+
 function copyBlock(id, btn) {
   const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text).then(() => {
@@ -472,6 +589,19 @@ function copyBlock(id, btn) {
       btn.textContent = original;
       btn.classList.remove("copied");
     }, 1500);
+  });
+}
+
+function copyAll(btn) {
+  const all = categoryIds.map(id => document.getElementById(id).innerText.trim()).join('\n\n');
+  navigator.clipboard.writeText(all).then(() => {
+    const original = btn.textContent;
+    btn.textContent = "✅ Copied Everything!";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("copied");
+    }, 1800);
   });
 }
 </script>
