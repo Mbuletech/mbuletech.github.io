@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mbule.Tech | Laptop Site Blocking Guide</title>
+<title> | Laptop Site Blocking Guide</title>
 <style>
   :root {
     --navy: #1B3A6B;
@@ -84,6 +84,7 @@
   }
   button.copy-btn:hover { background: #086565; }
   button.copy-btn.copied { background: #2e7d32; }
+  button.copy-btn.failed { background: #b23b3b; }
   button.copy-all-btn {
     background: var(--gold); color: var(--navy); border: none;
     padding: 10px 20px; border-radius: 6px; cursor: pointer;
@@ -91,6 +92,7 @@
   }
   button.copy-all-btn:hover { filter: brightness(0.95); }
   button.copy-all-btn.copied { background: #2e7d32; color: #fff; }
+  button.copy-all-btn.failed { background: #b23b3b; color: #fff; }
   pre {
     margin: 0; padding: 15px; font-family: Consolas, monospace;
     font-size: 13px; white-space: pre-wrap; word-break: break-all;
@@ -575,33 +577,78 @@ const categoryIds = ['cat-social','cat-music','cat-movies','cat-anime','cat-gami
 const countIds = { 'cat-social':'count-social','cat-music':'count-music','cat-movies':'count-movies','cat-anime':'count-anime','cat-gaming':'count-gaming','cat-betting':'count-betting' };
 
 categoryIds.forEach(id => {
-  const lines = document.getElementById(id).innerText.trim().split('\n').filter(l => l.trim().length > 0);
+  const lines = document.getElementById(id).textContent.trim().split('\n').filter(l => l.trim().length > 0);
   document.getElementById(countIds[id]).textContent = lines.length + ' entries';
 });
 
+function selectElementText(el) {
+  try {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } catch (e) { /* ignore */ }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.top = '0';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  return ok;
+}
+
+function tryCopy(text, onDone) {
+  if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => onDone(true)).catch(() => onDone(fallbackCopy(text)));
+  } else {
+    onDone(fallbackCopy(text));
+  }
+}
+
 function copyBlock(id, btn) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const original = btn.textContent;
-    btn.textContent = "Copied!";
-    btn.classList.add("copied");
+  const el = document.getElementById(id);
+  const text = el.textContent;
+  const original = btn.textContent;
+  tryCopy(text, (success) => {
+    if (success) {
+      btn.textContent = "Copied!";
+      btn.classList.add("copied");
+    } else {
+      btn.textContent = "Selected — Ctrl+C";
+      btn.classList.add("failed");
+      selectElementText(el);
+    }
     setTimeout(() => {
       btn.textContent = original;
-      btn.classList.remove("copied");
-    }, 1500);
+      btn.classList.remove("copied", "failed");
+    }, 2200);
   });
 }
 
 function copyAll(btn) {
-  const all = categoryIds.map(id => document.getElementById(id).innerText.trim()).join('\n\n');
-  navigator.clipboard.writeText(all).then(() => {
-    const original = btn.textContent;
-    btn.textContent = "✅ Copied Everything!";
-    btn.classList.add("copied");
+  const all = categoryIds.map(id => document.getElementById(id).textContent.trim()).join('\n\n');
+  const original = btn.textContent;
+  tryCopy(all, (success) => {
+    if (success) {
+      btn.textContent = "✅ Copied Everything!";
+      btn.classList.add("copied");
+    } else {
+      btn.textContent = "⚠️ Copy blocked — open each section and press Ctrl+C";
+      btn.classList.add("failed");
+    }
     setTimeout(() => {
       btn.textContent = original;
-      btn.classList.remove("copied");
-    }, 1800);
+      btn.classList.remove("copied", "failed");
+    }, 2600);
   });
 }
 </script>
